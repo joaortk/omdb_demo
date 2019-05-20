@@ -1,7 +1,6 @@
 package br.com.demo.omdbdemo.di.module
 
 import android.content.Context
-import br.com.demo.omdbdemo.data.api.OmdbAPI
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -47,11 +46,6 @@ class NetworkModule {
             .baseUrl("http://www.omdbapi.com/?apikey=1abc75a6&")
             .client(okHttpClient)
             .build()
-    }
-
-    @Provides
-    fun provideLoginAPI(retrofit: Retrofit): OmdbAPI {
-        return retrofit.create(OmdbAPI::class.java)
     }
 
     @Provides

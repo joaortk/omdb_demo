@@ -1,6 +1,5 @@
 package br.com.demo.omdbdemo.data.response
 
-import android.media.Rating
 import com.google.gson.annotations.SerializedName
 
 
@@ -19,13 +18,13 @@ data class MovieResponse(
     @SerializedName("Country") val country: String? = null,
     @SerializedName("Awards") val awards: String? = null,
     @SerializedName("Poster") val poster: String? = null,
-    @SerializedName("Ratings") val ratings: List<Rating>? = null,
+    @SerializedName("Ratings") val ratings: List<RatingResponse>? = null,
     @SerializedName("Metascore") val metascore: String? = null,
     @SerializedName("imdbRating") val imdbRating: String? = null,
     @SerializedName("imdbVotes") val imdbVotes: String? = null,
-    @SerializedName("imdbID") val imdbID: String? = null,
+    @SerializedName("imdbID") val imdbId: String? = null,
     @SerializedName("Type") val type: String? = null,
-    @SerializedName("DVD") val dVD: String? = null,
+    @SerializedName("DVD") val dvd: String? = null,
     @SerializedName("BoxOffice") val boxOffice: String? = null,
     @SerializedName("Production") val production: String? = null,
     @SerializedName("Website") val website: String? = null,
