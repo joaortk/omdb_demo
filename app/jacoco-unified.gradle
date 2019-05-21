@@ -3,7 +3,10 @@ apply plugin: 'jacoco'
 jacoco {
     toolVersion = "0.8.3"
     reportsDir = file("$buildDir/reports")
-    sourceDirs = files(sourceSets.main.kotlin.srcDirs).files.absolutePath
+    sourceDirs += files([
+            android.sourceSets.main.java.srcDirs,
+            "src/main/kotlin"
+    ])
 }
 
 coveralls {
