@@ -37,4 +37,4 @@ android:
     - google-gdk-license-.+
 
 script:
-  - "./gradlew clean build testDebugUnitTest"
+  - "./gradlew clean build fullCoverage coveralls"
