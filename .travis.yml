@@ -43,4 +43,4 @@ android:
 #  - adb shell input keyevent 82 &
 
 script:
-  - "./gradlew clean build testDebugUnitTest coveralls --stacktrace"
+  - "./gradlew clean build jacocoTestReport coveralls --stacktrace"
