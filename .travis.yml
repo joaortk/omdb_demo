@@ -21,7 +21,7 @@ env:
 
 android:
   components:
-    - tools
+#    - tools
 #    - platform-tools
 #    - tools
     - build-tools-$ANDROID_BUILD_TOOLS_VERSION
