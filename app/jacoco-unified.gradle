@@ -3,14 +3,14 @@ apply plugin: 'jacoco'
 jacoco {
     toolVersion = "0.8.3"
     reportsDir = file("$buildDir/reports")
-    sourceDirs += files([
-            android.sourceSets.main.java.srcDirs,
-            "src/main/kotlin"
-    ])
 }
 
 coveralls {
     jacocoReportPath = "$buildDir/reports/jacocoTestReport/jacocoTestReport.xml"
+    sourceDirs += files([
+            android.sourceSets.main.java.srcDirs,
+            "src/main/kotlin"
+    ])
 }
 
 tasks.withType(Test) {
