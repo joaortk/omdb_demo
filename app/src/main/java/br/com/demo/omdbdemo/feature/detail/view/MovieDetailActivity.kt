@@ -3,6 +3,7 @@ package br.com.demo.omdbdemo.feature.detail.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import br.com.demo.omdbdemo.OmdbDemoApplication
@@ -16,7 +17,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMovieDetailBinding
 
-    private val movie: Movie by lazy { intent.getParcelableExtra<Movie>(MOVIE_ARG) }
+    private val movieArg: Movie by lazy { intent.getParcelableExtra<Movie>(MOVIE_ARG) }
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -24,11 +25,25 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         inject()
+        setupBinding()
+        setupViewModel()
+    }
+
+    private fun setupViewModel() {
+        binding.viewModel?.run {
+            movieArg.imdbId?.let { id ->
+                loadData(id).observe(this@MovieDetailActivity, Observer {
+                    this.movie.set(it)
+                    this.formatFields()
+                })
+            }
+        }
+    }
+
+    private fun setupBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
         binding.viewModel = ViewModelProviders.of(this, viewModelFactory)[MovieDetailViewModel::class.java]
         binding.lifecycleOwner = this
-        binding.viewModel?.setup(movie)
-
     }
 
     private fun inject() {
