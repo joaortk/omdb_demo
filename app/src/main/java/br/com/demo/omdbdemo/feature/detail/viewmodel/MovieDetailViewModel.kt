@@ -1,7 +1,7 @@
 package br.com.demo.omdbdemo.feature.detail.viewmodel
 
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import br.com.demo.omdbdemo.domain.model.Movie
 import br.com.demo.omdbdemo.domain.repository.OmdbRepository
@@ -15,7 +15,7 @@ class MovieDetailViewModel @Inject constructor(private val repository: OmdbRepos
         imdbRating.set(String.format("Avaliação iMDB: %s", movie.get()?.imdbRating))
     }
 
-    fun loadData(id: String): MutableLiveData<Movie> {
+    fun loadData(id: String): LiveData<Movie> {
         return repository.getMovie(id)
     }
 
