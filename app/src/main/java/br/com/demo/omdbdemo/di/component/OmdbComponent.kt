@@ -1,16 +1,14 @@
 package br.com.demo.omdbdemo.di.component
 
-import br.com.demo.omdbdemo.MainActivity
-import br.com.demo.omdbdemo.di.module.ApiModule
-import br.com.demo.omdbdemo.di.module.NetworkModule
-import br.com.demo.omdbdemo.di.module.OmdbModule
-import br.com.demo.omdbdemo.di.module.RepositoryModule
+import br.com.demo.omdbdemo.di.module.*
+import br.com.demo.omdbdemo.feature.home.view.HomeActivity
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
+        ViewModelModule::class,
         NetworkModule::class,
         ApiModule::class,
         RepositoryModule::class,
@@ -18,5 +16,5 @@ import javax.inject.Singleton
     ]
 )
 interface OmdbComponent {
-    fun inject(activity: MainActivity)
+    fun inject(activity: HomeActivity)
 }
