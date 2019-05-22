@@ -5,12 +5,12 @@ import br.com.demo.omdbdemo.domain.model.Movie
 
 interface OmdbRepository {
     fun searchMovies(
-        title: String,
-        type: String?,
-        year: String?
+            title: String,
+            type: String?,
+            year: String?
     ): LiveData<List<Movie>>
 
     fun getMovie(
-        id: String
+            id: String
     ): LiveData<Movie>
 }

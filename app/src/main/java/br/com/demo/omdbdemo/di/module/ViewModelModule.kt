@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.demo.omdbdemo.di.ViewModelFactory
 import br.com.demo.omdbdemo.di.ViewModelKey
+import br.com.demo.omdbdemo.feature.detail.viewmodel.MovieDetailViewModel
 import br.com.demo.omdbdemo.feature.home.viewmodel.HomeViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-
 
 @Module
 abstract class ViewModelModule {
@@ -19,5 +19,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(HomeViewModel::class)
     internal abstract fun bindHomeViewModel(viewModel: HomeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MovieDetailViewModel::class)
+    internal abstract fun bindMovieDetailViewModel(viewModel: MovieDetailViewModel): ViewModel
 }
 

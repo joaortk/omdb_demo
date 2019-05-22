@@ -7,14 +7,13 @@ import br.com.demo.omdbdemo.di.module.OmdbModule
 
 class OmdbDemoApplication : Application() {
 
-
     override fun onCreate() {
         super.onCreate()
 
         appComponent = DaggerOmdbComponent
-            .builder()
-            .omdbModule(OmdbModule(this))
-            .build()
+                .builder()
+                .omdbModule(OmdbModule(this))
+                .build()
     }
 
     companion object {
