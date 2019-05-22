@@ -25,7 +25,7 @@ object MovieMapper {
                 response.language,
                 response.country,
                 response.awards,
-                response.poster,
+                response.poster?.replace("300","1200"),
                 RatingMapper.toRatingList(response.ratings),
                 response.metascore,
                 response.imdbRating,
