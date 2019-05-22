@@ -9,7 +9,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import okhttp3.Cache
-import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -22,18 +21,14 @@ import java.util.concurrent.TimeUnit
 class NetworkModule {
     @Provides
     @Reusable
-    internal fun provideOkHttpClient(
-        certificatePinner: CertificatePinner
-    ): OkHttpClient {
+    internal fun provideOkHttpClient(): OkHttpClient {
         val builder = OkHttpClient.Builder()
-            .readTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
 
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         builder.addInterceptor(httpLoggingInterceptor)
-
-
         return builder.build()
     }
 
@@ -41,11 +36,11 @@ class NetworkModule {
     @Reusable
     internal fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl("http://www.omdbapi.com/?apikey=1abc75a6&")
-            .client(okHttpClient)
-            .build()
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl("http://www.omdbapi.com/?apikey=1abc75a6&")
+                .client(okHttpClient)
+                .build()
     }
 
     @Provides
@@ -61,8 +56,8 @@ class NetworkModule {
         val gsonBuilder = GsonBuilder()
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         gsonBuilder.registerTypeAdapter(
-            Date::class.java,
-            JsonDeserializer { json, _, _ -> Date(json.asJsonPrimitive.asLong) })
+                Date::class.java,
+                JsonDeserializer { json, _, _ -> Date(json.asJsonPrimitive.asLong) })
         return gsonBuilder.create()
     }
 }

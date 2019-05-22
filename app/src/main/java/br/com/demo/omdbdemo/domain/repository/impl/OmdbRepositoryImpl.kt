@@ -1,6 +1,5 @@
 package br.com.demo.omdbdemo.domain.repository.impl
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.com.demo.omdbdemo.data.api.OmdbAPI
 import br.com.demo.omdbdemo.data.mapper.MovieMapper
@@ -14,7 +13,7 @@ import javax.inject.Inject
 
 class OmdbRepositoryImpl @Inject constructor(private val api: OmdbAPI) : OmdbRepository {
 
-    override fun searchMovies(title: String, type: String?, year: String?): LiveData<List<Movie>> {
+    override fun searchMovies(title: String, type: String?, year: String?): MutableLiveData<List<Movie>> {
         val movieLiveData = MutableLiveData<List<Movie>>()
         api.getSearch(title, type, year).enqueue(object : Callback<List<MovieResponse>> {
             override fun onFailure(call: Call<List<MovieResponse>>, t: Throwable) {
@@ -29,7 +28,7 @@ class OmdbRepositoryImpl @Inject constructor(private val api: OmdbAPI) : OmdbRep
         return movieLiveData
     }
 
-    override fun getMovie(id: String): LiveData<Movie> {
+    override fun getMovie(id: String): MutableLiveData<Movie> {
         val movieLiveData = MutableLiveData<Movie>()
         api.getMovie(id).enqueue(object : Callback<MovieResponse> {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
