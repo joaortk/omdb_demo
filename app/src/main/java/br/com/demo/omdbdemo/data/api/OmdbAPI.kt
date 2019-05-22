@@ -6,15 +6,15 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface OmdbAPI {
-    @GET
+    @GET("/")
     fun getSearch(
-        @Query("s") title: String,
-        @Query("type") type: String?,
-        @Query("y") year: String?
+            @Query("s") title: String,
+            @Query("type") type: String?,
+            @Query("y") year: String?
     ): Call<List<MovieResponse>>
 
-    @GET
+    @GET("/")
     fun getMovie(
-        @Query("i") id: String
+            @Query("i") id: String
     ): Call<MovieResponse>
 }

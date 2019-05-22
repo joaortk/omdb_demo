@@ -1,6 +1,7 @@
 package br.com.demo.omdbdemo.di.module
 
 import android.content.Context
+import br.com.demo.omdbdemo.data.api.OmdbApiInterceptor
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -29,6 +30,7 @@ class NetworkModule {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         builder.addInterceptor(httpLoggingInterceptor)
+        builder.addInterceptor(OmdbApiInterceptor())
         return builder.build()
     }
 
@@ -38,7 +40,7 @@ class NetworkModule {
         return Retrofit.Builder()
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl("http://www.omdbapi.com/?apikey=1abc75a6&")
+                .baseUrl("http://www.omdbapi.com/")
                 .client(okHttpClient)
                 .build()
     }
