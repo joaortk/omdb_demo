@@ -1,4 +1,4 @@
-package br.com.demo.omdbdemo
+package br.com.demo.omdbdemo.feature.home.view
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import br.com.demo.omdbdemo.OmdbDemoApplication
+import br.com.demo.omdbdemo.R
 import javax.inject.Inject
 
 

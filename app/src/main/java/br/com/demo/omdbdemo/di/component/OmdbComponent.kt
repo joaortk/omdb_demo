@@ -1,6 +1,6 @@
 package br.com.demo.omdbdemo.di.component
 
-import br.com.demo.omdbdemo.MainActivity
+import br.com.demo.omdbdemo.feature.home.view.MainActivity
 import br.com.demo.omdbdemo.di.module.ApiModule
 import br.com.demo.omdbdemo.di.module.NetworkModule
 import br.com.demo.omdbdemo.di.module.OmdbModule
