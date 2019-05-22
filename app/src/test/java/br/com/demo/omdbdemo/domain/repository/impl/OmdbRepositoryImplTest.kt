@@ -1,5 +1,6 @@
 package br.com.demo.omdbdemo.domain.repository.impl
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import br.com.demo.omdbdemo.data.api.OmdbAPI
 import br.com.demo.omdbdemo.data.response.MovieResponse
@@ -51,8 +52,9 @@ class OmdbRepositoryImplTest {
     fun onGetMovieSuccess_mustReturnMovie() {
         setupApiGetMovieSuccess()
         val observer = mockk<Observer<Movie>>(relaxed = true)
-        val liveData = repository.getMovie(id = "MOVIE_ID")
+        val liveData = MutableLiveData<Movie>()
         liveData.observeForever(observer)
+        repository.getMovie(id = "MOVIE_ID", movieLiveData = liveData)
         verify { observer.onChanged(any()) }
     }
 
@@ -61,8 +63,8 @@ class OmdbRepositoryImplTest {
         val call = mockk<Call<MovieResponse>>()
         every { call.enqueue(capture(callbackSlot)) }.answers {
             callbackSlot.captured.onResponse(
-                call,
-                Response.success(movieResponse)
+                    call,
+                    Response.success(movieResponse)
             )
         }
         every { api.getMovie(any()) }.returns(call)
@@ -72,7 +74,8 @@ class OmdbRepositoryImplTest {
     fun onGetMovieError_mustReturnNull() {
         setupGetMovieApiFail()
         val observer = mockk<Observer<Movie>>(relaxed = true)
-        val liveData = repository.getMovie(id = "MOVIE_ID")
+        val liveData = MutableLiveData<Movie>()
+        repository.getMovie(id = "MOVIE_ID", movieLiveData = liveData)
         liveData.observeForever(observer)
         verify { observer.onChanged(null) }
     }
@@ -82,8 +85,8 @@ class OmdbRepositoryImplTest {
         val call = mockk<Call<List<MovieResponse>>>()
         every { call.enqueue(capture(callbackSlot)) }.answers {
             callbackSlot.captured.onFailure(
-                call,
-                Exception()
+                    call,
+                    Exception()
             )
         }
         every { api.getSearch(any(), any(), any()) }.returns(call)
@@ -94,59 +97,57 @@ class OmdbRepositoryImplTest {
         val call = mockk<Call<MovieResponse>>()
         every { call.enqueue(capture(callbackSlot)) }.answers {
             callbackSlot.captured.onFailure(
-                call,
-                Exception()
+                    call,
+                    Exception()
             )
         }
         every { api.getMovie(any()) }.returns(call)
     }
-
 
     private fun setupApiSearchSuccess() {
         val callbackSlot = slot<Callback<List<MovieResponse>>>()
         val call = mockk<Call<List<MovieResponse>>>()
         every { call.enqueue(capture(callbackSlot)) }.answers {
             callbackSlot.captured.onResponse(
-                call,
-                Response.success(listOf(movieResponse))
+                    call,
+                    Response.success(listOf(movieResponse))
             )
         }
         every { api.getSearch(any(), any(), any()) }.returns(call)
     }
 
-
     private val ratingsResponse = listOf(
-        RatingResponse("Internet Movie Database", "8.9/10"),
-        RatingResponse("Rotten Tomatoes", "95%"),
-        RatingResponse("Metacritic", "78/100")
+            RatingResponse("Internet Movie Database", "8.9/10"),
+            RatingResponse("Rotten Tomatoes", "95%"),
+            RatingResponse("Metacritic", "78/100")
     )
 
     private val movieResponse =
-        MovieResponse(
-            "Avengers: Endgame",
-            "2019",
-            "PG-13",
-            "26 Apr 2019",
-            "181 min",
-            "Action, Adventure, Fantasy, Sci-Fi",
-            "Anthony Russo, Joe Russo",
-            "Christopher Markus, Stephen McFeely, Stan Lee (based on the Marvel comics by), Jack Kirby (based on the Marvel comics by), Jim Starlin (comic book)",
-            "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth",
-            "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to undo Thanos' actions and restore order to the universe.",
-            "English, Japanese, Xhosa",
-            "USA",
-            "N/A",
-            "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg",
-            ratingsResponse,
-            "78",
-            "8.9",
-            "360,133",
-            "tt4154796",
-            "movie",
-            "N/A",
-            "N/A",
-            "Marvel Studios",
-            "https://movies.disney.com/avengers-endgame",
-            "True"
-        )
+            MovieResponse(
+                    "Avengers: Endgame",
+                    "2019",
+                    "PG-13",
+                    "26 Apr 2019",
+                    "181 min",
+                    "Action, Adventure, Fantasy, Sci-Fi",
+                    "Anthony Russo, Joe Russo",
+                    "Christopher Markus, Stephen McFeely, Stan Lee (based on the Marvel comics by), Jack Kirby (based on the Marvel comics by), Jim Starlin (comic book)",
+                    "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth",
+                    "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to undo Thanos' actions and restore order to the universe.",
+                    "English, Japanese, Xhosa",
+                    "USA",
+                    "N/A",
+                    "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg",
+                    ratingsResponse,
+                    "78",
+                    "8.9",
+                    "360,133",
+                    "tt4154796",
+                    "movie",
+                    "N/A",
+                    "N/A",
+                    "Marvel Studios",
+                    "https://movies.disney.com/avengers-endgame",
+                    "True"
+            )
 }

@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:text="@{viewModel.movie.title}"
+                android:text="@{viewModel.liveDataMediator.title}"
                 tools:text="Avengers: Endgame" />
 
             <TextView
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:text="@{viewModel.movie.year}"
+                android:text="@{viewModel.liveDataMediator.year}"
                 tools:text="2019" />
 
             <ImageView
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:src="@{viewModel.movie.poster}"
+                android:src="@{viewModel.liveDataMediator.poster}"
                 tools:src="@mipmap/ic_launcher" />
 
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:text="@{viewModel.movie.actors}"
+                android:text="@{viewModel.liveDataMediator.actors}"
                 tools:text="Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth" />
 
             <TextView
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:text="@{viewModel.movie.director}"
+                android:text="@{viewModel.liveDataMediator.director}"
                 tools:text="Anthony Russo, Joe Russo" />
 
             <TextView
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:text="@{viewModel.movie.plot}"
+                android:text="@{viewModel.liveDataMediator.plot}"
                 tools:text="After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to undo Thanos' actions and restore order to the universe." />
 
             <TextView

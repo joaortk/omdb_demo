@@ -1,6 +1,7 @@
 package br.com.demo.omdbdemo.domain.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import br.com.demo.omdbdemo.domain.model.Movie
 
 interface OmdbRepository {
@@ -11,6 +12,7 @@ interface OmdbRepository {
     ): LiveData<List<Movie>>
 
     fun getMovie(
-            id: String
-    ): LiveData<Movie>
+            id: String,
+            movieLiveData: MutableLiveData<Movie>
+    )
 }

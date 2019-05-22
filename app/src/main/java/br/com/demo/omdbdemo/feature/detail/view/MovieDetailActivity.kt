@@ -3,7 +3,6 @@ package br.com.demo.omdbdemo.feature.detail.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import br.com.demo.omdbdemo.OmdbDemoApplication
@@ -30,13 +29,8 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        binding.viewModel?.run {
-            movieArg.imdbId?.let { id ->
-                loadData(id).observe(this@MovieDetailActivity, Observer {
-                    this.movie.set(it)
-                    this.formatFields()
-                })
-            }
+        movieArg.imdbId?.let { id ->
+            binding.viewModel?.loadData(id)
         }
     }
 

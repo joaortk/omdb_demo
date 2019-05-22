@@ -5,40 +5,45 @@ jacoco {
     reportsDir = file("$buildDir/reports")
 }
 
-coveralls {
-    jacocoReportPath = "$buildDir/reports/jacocoTestReport/jacocoTestReport.xml"
-    sourceDirs += files([
-            android.sourceSets.main.java.srcDirs,
-            "src/main/kotlin"
-    ])
-}
-
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports for Debug build"
+android.buildTypes.debug.testCoverageEnabled = true
 
+//Variáveis necessárias
+
+ext.instrumentedTestTaskName = ":app:createDebugCoverageReport"
+ext.unitTestTaskName = ":app:testDebugUnitTest"
+ext.demoName = "app"
+ext.libName = "app"
+ext.flavorLib = ""
+ext.flavorDemo = ""
+
+task "fullCoverage"(type: JacocoReport, dependsOn: [unitTestTaskName, instrumentedTestTaskName]) {
+    group = "Reporting"
+    description = "Generate Jacoco combined coverage reports for Instrumented and Unit Tests"
+    onlyIf = { true }
     reports {
         xml.enabled = true
         html.enabled = true
     }
 
-    // what to exclude from coverage report
-    // UI, "noise", generated classes, platform classes, etc.
-    def excludes = [
+    def libFlavorDir = flavorLib == "" ? "debug" : "${flavorLib}Debug"
+    def fileFilter = [
             '**/R.class',
             '**/R$*.class',
             '**/*$ViewInjector*.*',
+            '**/*$ViewBinder*.*',
             '**/BuildConfig.*',
             '**/Manifest*.*',
+            '**/*App.*',
+            '**/*Component.*',
+            '**/*Module.*',
             '**/*Test*.*',
             'android/**/*.*',
             '**/databinding/**/*.*',
             '**/android/databinding/*Binding.*',
-            '**/*Output.kt',
             '**/BR.*',
             '**/*Module.*', // Modules for Dagger.
             '**/*Dagger*.*', // Dagger auto-generated code.
@@ -46,19 +51,20 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
             '**/*_Provide*Factory*.*',
             '**/*_Factory.*' //Dagger auto-generated code
     ]
-    // generated classes
-    classDirectories = fileTree(
-            dir: "$buildDir/intermediates/classes/debug",
-            excludes: excludes
-    ) + fileTree(
-            dir: "$buildDir/tmp/kotlin-classes/debug",
-            excludes: excludes
-    )
 
-    // sources
-    sourceDirectories = files([
-            android.sourceSets.main.java.srcDirs,
-            "src/main/kotlin"
+
+    def libDebugTree = fileTree(dir: "${rootDir}/$libName/build/tmp/kotlin-classes/$libFlavorDir", excludes: fileFilter)
+    def libMainSrc = "$rootDir/$libName/src/main/java"
+
+    sourceDirectories = files([libMainSrc])
+    classDirectories = files([libDebugTree])
+
+    def flavorPath = flavorDemo != "" ? "flavors/${flavorDemo.toUpperCase()}/" : ""
+
+    executionData = fileTree(dir: "$rootDir", includes: [
+            "$libName/build/jacoco/test${flavorLib.capitalize()}DebugUnitTest.exec",
+            "$demoName/build/outputs/code-coverage/connected/${flavorPath}*coverage.ec",
+            "$demoName/build/outputs/code_coverage/debugAndroidTest/connected/*coverage.ec",
+            "$demoName/build/spoon-output/debug/coverage/**/*.ec",
     ])
-    executionData = files("$buildDir/jacoco/testDebugUnitTest.exec")
 }
