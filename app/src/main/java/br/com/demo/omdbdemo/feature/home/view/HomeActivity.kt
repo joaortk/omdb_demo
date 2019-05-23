@@ -5,11 +5,14 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import br.com.demo.omdbdemo.OmdbDemoApplication
 import br.com.demo.omdbdemo.R
 import br.com.demo.omdbdemo.databinding.ActivityHomeBinding
 import br.com.demo.omdbdemo.di.ViewModelFactory
+import br.com.demo.omdbdemo.domain.model.Movie
 import br.com.demo.omdbdemo.feature.home.viewmodel.HomeViewModel
 import javax.inject.Inject
 
@@ -25,8 +28,11 @@ class HomeActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
         val binding = DataBindingUtil.setContentView<ActivityHomeBinding>(this, R.layout.activity_home)
         binding.viewModel = viewModel
-        viewModel.liveDataMediator.observe(this, androidx.lifecycle.Observer {
-
+        binding.moviesRecyclerview.adapter = MoviesAdapter(emptyList())
+        viewModel.liveDataMediator.observe(this, Observer {
+            binding.moviesRecyclerview.layoutManager = GridLayoutManager(this, 3)
+            binding.moviesRecyclerview.adapter = MoviesAdapter(it)
+            binding.moviesRecyclerview.adapter?.notifyDataSetChanged()
         })
         setSupportActionBar(binding.mainToolbar)
 //        startActivity(Intent(this, MovieDetailActivity::class.java).apply {

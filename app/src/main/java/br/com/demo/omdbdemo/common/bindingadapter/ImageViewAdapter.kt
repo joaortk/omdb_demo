@@ -7,6 +7,8 @@ import com.squareup.picasso.Picasso
 @BindingAdapter("android:src")
 fun setImageUrl(imageView: ImageView, url: String?) {
     url?.run {
-        Picasso.get().load(this).into(imageView)
+        if (url.isNotEmpty()) {
+            Picasso.get().load(this).into(imageView)
+        }
     }
 }

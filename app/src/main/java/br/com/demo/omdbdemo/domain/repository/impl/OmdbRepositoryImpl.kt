@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import br.com.demo.omdbdemo.data.api.OmdbAPI
 import br.com.demo.omdbdemo.data.mapper.MovieMapper
 import br.com.demo.omdbdemo.data.response.MovieResponse
+import br.com.demo.omdbdemo.data.response.SearchResponse
 import br.com.demo.omdbdemo.domain.model.Movie
 import br.com.demo.omdbdemo.domain.repository.OmdbRepository
 import retrofit2.Call
@@ -20,12 +21,12 @@ class OmdbRepositoryImpl @Inject constructor(private val api: OmdbAPI) : OmdbRep
         year: String?,
         movieLiveData: MutableLiveData<List<Movie>>
     ): LiveData<List<Movie>> {
-        api.getSearch(title, type, year).enqueue(object : Callback<List<MovieResponse>> {
-            override fun onFailure(call: Call<List<MovieResponse>>, t: Throwable) {
+        api.getSearch(title, type, year).enqueue(object : Callback<SearchResponse> {
+            override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
                 movieLiveData.value = null
             }
 
-            override fun onResponse(call: Call<List<MovieResponse>>, response: Response<List<MovieResponse>>) {
+            override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                 movieLiveData.value = MovieMapper.toMovieList(response.body())
             }
 
