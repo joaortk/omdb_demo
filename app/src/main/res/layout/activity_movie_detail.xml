@@ -19,6 +19,7 @@
                 android:orientation="vertical">
 
             <TextView
+                    android:id="@+id/detail_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -29,6 +30,7 @@
                     tools:text="Avengers: Endgame"/>
 
             <TextView
+                    android:id="@+id/detail_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -36,6 +38,7 @@
                     tools:text="2019"/>
 
             <ImageView
+                    android:id="@+id/detail_poster"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -44,6 +47,7 @@
                     tools:src="@mipmap/ic_launcher"/>
 
             <TextView
+                    android:id="@+id/detail_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -53,6 +57,7 @@
                     tools:text="8.9"/>
 
             <TextView
+                    android:id="@+id/detail_cast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -61,6 +66,7 @@
                     tools:text="Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth"/>
 
             <TextView
+                    android:id="@+id/detail_directors"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -69,6 +75,7 @@
                     tools:text="Anthony Russo, Joe Russo"/>
 
             <TextView
+                    android:id="@+id/detail_plot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"

@@ -5,17 +5,13 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import br.com.demo.omdbdemo.domain.model.Movie
 import br.com.demo.omdbdemo.feature.detail.view.MovieDetailActivity
-import org.junit.Assert.assertEquals
+import br.com.demo.omdbdemo.robot.BaseTestRobot
 import org.junit.Rule
 import org.junit.Test
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleInstrumentedTest {
+class MovieDetailActivityTest {
 
+    private fun assert(func: BaseTestRobot.() -> Unit) = BaseTestRobot().apply { func() }
 
     @get:Rule
     var activityRule: ActivityTestRule<MovieDetailActivity> =
@@ -28,11 +24,21 @@ class ExampleInstrumentedTest {
             }
         }
 
-
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = activityRule.activity
-        assertEquals("br.com.demo.omdbdemo", appContext.packageName)
+    fun onDetailLoaded_mustShowFields() {
+        Thread.sleep(2000)
+        assert {
+            isDisplayed(R.id.detail_title)
+            matchText(R.id.detail_title, "Avengers: Endgame")
+            isDisplayed(R.id.detail_year)
+            matchText(R.id.detail_year, "2019")
+            isDisplayedOnScroll(R.id.detail_poster)
+            isDisplayedOnScroll(R.id.detail_cast)
+            isDisplayedOnScroll(R.id.detail_directors)
+            isDisplayedOnScroll(R.id.detail_plot)
+            isDisplayed(R.id.detail_rating)
+            matchText(R.id.detail_rating, "Avaliação iMDB: 8.9")
+        }
     }
+
 }
