@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.demo.omdbdemo.domain.model.Movie
 import br.com.demo.omdbdemo.domain.repository.OmdbRepository
-import br.com.demo.omdbdemo.feature.home.view.MovieItemViewModel
 import java.util.*
 import javax.inject.Inject
 

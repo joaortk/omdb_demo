@@ -1,5 +1,6 @@
 package br.com.demo.omdbdemo.feature.home.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import br.com.demo.omdbdemo.R
 import br.com.demo.omdbdemo.databinding.ActivityHomeBinding
 import br.com.demo.omdbdemo.di.ViewModelFactory
 import br.com.demo.omdbdemo.domain.model.Movie
+import br.com.demo.omdbdemo.feature.detail.view.MovieDetailActivity
 import br.com.demo.omdbdemo.feature.home.viewmodel.HomeViewModel
 import javax.inject.Inject
 
@@ -21,23 +23,43 @@ class HomeActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: HomeViewModel
+    lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        inject()
+        setupBinding()
+        setupViewModel()
+        setSupportActionBar(binding.mainToolbar)
+    }
+
+    private fun setupBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        binding.viewModel = viewModel
+        binding.moviesRecyclerview.layoutManager = GridLayoutManager(this, 3)
+        binding.moviesRecyclerview.adapter = MoviesAdapter()
+
+    }
+
+    private fun setupViewModel() {
+        viewModel.liveDataMediator.observe(this, Observer { movies ->
+            (binding.moviesRecyclerview.adapter as? MoviesAdapter)?.let {
+                it.items = movies
+                it.listener = object : MoviesAdapterListener {
+                    override fun didSelectMovie(movie: Movie) {
+                        startActivity(Intent(this@HomeActivity, MovieDetailActivity::class.java).apply {
+                            putExtra(MovieDetailActivity.MOVIE_ARG, movie)
+                        })
+                    }
+                }
+            }
+
+        })
+    }
+
+    private fun inject() {
         OmdbDemoApplication.appComponent.inject(this)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
-        val binding = DataBindingUtil.setContentView<ActivityHomeBinding>(this, R.layout.activity_home)
-        binding.viewModel = viewModel
-        binding.moviesRecyclerview.adapter = MoviesAdapter(emptyList())
-        viewModel.liveDataMediator.observe(this, Observer {
-            binding.moviesRecyclerview.layoutManager = GridLayoutManager(this, 3)
-            binding.moviesRecyclerview.adapter = MoviesAdapter(it)
-            binding.moviesRecyclerview.adapter?.notifyDataSetChanged()
-        })
-        setSupportActionBar(binding.mainToolbar)
-//        startActivity(Intent(this, MovieDetailActivity::class.java).apply {
-//            putExtra(MovieDetailActivity.MOVIE_ARG, Movie(title = "Avengers: Endgame*", imdbId = "tt4154796"))
-//        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

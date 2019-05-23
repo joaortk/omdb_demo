@@ -6,7 +6,7 @@
     <data>
         <variable
             name="movie"
-            type="br.com.demo.omdbdemo.feature.home.view.MovieItemViewModel" />
+            type="br.com.demo.omdbdemo.feature.home.viewmodel.MovieItemViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package br.com.demo.omdbdemo.feature.home.view
+package br.com.demo.omdbdemo.feature.home.viewmodel
 
 import br.com.demo.omdbdemo.domain.model.Movie
 
