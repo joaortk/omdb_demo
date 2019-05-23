@@ -2,6 +2,7 @@ package br.com.demo.omdbdemo.data.mapper
 
 import br.com.demo.omdbdemo.data.response.MovieResponse
 import br.com.demo.omdbdemo.data.response.RatingResponse
+import br.com.demo.omdbdemo.data.response.SearchResponse
 import br.com.demo.omdbdemo.domain.model.Movie
 import br.com.demo.omdbdemo.domain.model.Rating
 import com.google.common.truth.Truth.assertThat
@@ -12,7 +13,7 @@ class MovieMapperTest {
     @Test
     fun movieListResponseToMovieList() {
         assertThat(
-            MovieMapper.toMovieList(listOf(movieResponse, emptyMovieResponse))
+            MovieMapper.toMovieList(SearchResponse( listOf(movieResponse, emptyMovieResponse)))
         ).containsExactlyElementsIn(
             listOf(movie, emptyMovie)
         )

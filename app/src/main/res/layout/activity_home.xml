@@ -27,6 +27,26 @@
             app:title="OMDB Search"
             app:titleTextColor="@color/colorAccent" />
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:isLoading="@{viewModel.isLoading}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_toolbar" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isLoading="@{viewModel.isLoading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_toolbar" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

@@ -1,12 +1,13 @@
 package br.com.demo.omdbdemo.data.mapper
 
 import br.com.demo.omdbdemo.data.response.MovieResponse
+import br.com.demo.omdbdemo.data.response.SearchResponse
 import br.com.demo.omdbdemo.domain.model.Movie
 
 object MovieMapper {
 
-    fun toMovieList(response: List<MovieResponse>?): List<Movie>? {
-        return response?.map { toMovie(it) } ?: run { null }
+    fun toMovieList(response: SearchResponse?): List<Movie> {
+        return response?.search?.map { toMovie(it) } ?: emptyList()
     }
 
     fun toMovie(response: MovieResponse?): Movie {

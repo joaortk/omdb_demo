@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import br.com.demo.omdbdemo.data.api.OmdbAPI
 import br.com.demo.omdbdemo.data.response.MovieResponse
 import br.com.demo.omdbdemo.data.response.RatingResponse
+import br.com.demo.omdbdemo.data.response.SearchResponse
 import br.com.demo.omdbdemo.domain.model.Movie
 import io.mockk.every
 import io.mockk.mockk
@@ -83,8 +84,8 @@ class OmdbRepositoryImplTest {
     }
 
     private fun setupSearchApiFail() {
-        val callbackSlot = slot<Callback<List<MovieResponse>>>()
-        val call = mockk<Call<List<MovieResponse>>>()
+        val callbackSlot = slot<Callback<SearchResponse>>()
+        val call = mockk<Call<SearchResponse>>()
         every { call.enqueue(capture(callbackSlot)) }.answers {
             callbackSlot.captured.onFailure(
                 call,
@@ -107,12 +108,12 @@ class OmdbRepositoryImplTest {
     }
 
     private fun setupApiSearchSuccess() {
-        val callbackSlot = slot<Callback<List<MovieResponse>>>()
-        val call = mockk<Call<List<MovieResponse>>>()
+        val callbackSlot = slot<Callback<SearchResponse>>()
+        val call = mockk<Call<SearchResponse>>()
         every { call.enqueue(capture(callbackSlot)) }.answers {
             callbackSlot.captured.onResponse(
                 call,
-                Response.success(listOf(movieResponse))
+                Response.success(SearchResponse(listOf(movieResponse)))
             )
         }
         every { api.getSearch(any(), any(), any()) }.returns(call)
