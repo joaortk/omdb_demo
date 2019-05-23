@@ -82,7 +82,7 @@ class MovieMapperTest {
         "English, Japanese, Xhosa",
         "USA",
         "N/A",
-        "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg",
+        "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX1200.jpg",
         ratings,
         "78",
         "8.9",

@@ -1,5 +1,6 @@
 package br.com.demo.omdbdemo.domain.repository.impl
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import br.com.demo.omdbdemo.data.api.OmdbAPI
 import br.com.demo.omdbdemo.data.response.MovieResponse
@@ -33,7 +34,8 @@ class OmdbRepositoryImplTest {
     fun onSearchMoviesSuccess_mustReturnMovies() {
         setupApiSearchSuccess()
         val observer = mockk<Observer<List<Movie>>>(relaxed = true)
-        val liveData = repository.searchMovies(title = "Avengers: Endgame", type = "MOVIE", year = "2019")
+        val liveData = MutableLiveData<List<Movie>>()
+        repository.searchMovies(title = "Avengers: Endgame", type = "MOVIE", year = "2019", movieLiveData = liveData)
         liveData.observeForever(observer)
         verify { observer.onChanged(any()) }
     }
@@ -42,7 +44,8 @@ class OmdbRepositoryImplTest {
     fun onSearchMoviesError_mustReturnNull() {
         setupSearchApiFail()
         val observer = mockk<Observer<List<Movie>>>(relaxed = true)
-        val liveData = repository.searchMovies(title = "Avengers: Endgame", type = "MOVIE", year = "2019")
+        val liveData = MutableLiveData<List<Movie>>()
+        repository.searchMovies(title = "Avengers: Endgame", type = "MOVIE", year = "2019", movieLiveData = liveData)
         liveData.observeForever(observer)
         verify { observer.onChanged(null) }
     }
@@ -51,8 +54,9 @@ class OmdbRepositoryImplTest {
     fun onGetMovieSuccess_mustReturnMovie() {
         setupApiGetMovieSuccess()
         val observer = mockk<Observer<Movie>>(relaxed = true)
-        val liveData = repository.getMovie(id = "MOVIE_ID")
+        val liveData = MutableLiveData<Movie>()
         liveData.observeForever(observer)
+        repository.getMovie(id = "MOVIE_ID", movieLiveData = liveData)
         verify { observer.onChanged(any()) }
     }
 
@@ -72,7 +76,8 @@ class OmdbRepositoryImplTest {
     fun onGetMovieError_mustReturnNull() {
         setupGetMovieApiFail()
         val observer = mockk<Observer<Movie>>(relaxed = true)
-        val liveData = repository.getMovie(id = "MOVIE_ID")
+        val liveData = MutableLiveData<Movie>()
+        repository.getMovie(id = "MOVIE_ID", movieLiveData = liveData)
         liveData.observeForever(observer)
         verify { observer.onChanged(null) }
     }
@@ -101,7 +106,6 @@ class OmdbRepositoryImplTest {
         every { api.getMovie(any()) }.returns(call)
     }
 
-
     private fun setupApiSearchSuccess() {
         val callbackSlot = slot<Callback<List<MovieResponse>>>()
         val call = mockk<Call<List<MovieResponse>>>()
@@ -113,7 +117,6 @@ class OmdbRepositoryImplTest {
         }
         every { api.getSearch(any(), any(), any()) }.returns(call)
     }
-
 
     private val ratingsResponse = listOf(
         RatingResponse("Internet Movie Database", "8.9/10"),

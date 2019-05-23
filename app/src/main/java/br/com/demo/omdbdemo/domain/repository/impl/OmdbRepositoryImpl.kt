@@ -14,8 +14,12 @@ import javax.inject.Inject
 
 class OmdbRepositoryImpl @Inject constructor(private val api: OmdbAPI) : OmdbRepository {
 
-    override fun searchMovies(title: String, type: String?, year: String?): LiveData<List<Movie>> {
-        val movieLiveData = MutableLiveData<List<Movie>>()
+    override fun searchMovies(
+        title: String,
+        type: String?,
+        year: String?,
+        movieLiveData: MutableLiveData<List<Movie>>
+    ): LiveData<List<Movie>> {
         api.getSearch(title, type, year).enqueue(object : Callback<List<MovieResponse>> {
             override fun onFailure(call: Call<List<MovieResponse>>, t: Throwable) {
                 movieLiveData.value = null
@@ -29,8 +33,7 @@ class OmdbRepositoryImpl @Inject constructor(private val api: OmdbAPI) : OmdbRep
         return movieLiveData
     }
 
-    override fun getMovie(id: String): LiveData<Movie> {
-        val movieLiveData = MutableLiveData<Movie>()
+    override fun getMovie(id: String, movieLiveData: MutableLiveData<Movie>) {
         api.getMovie(id).enqueue(object : Callback<MovieResponse> {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 movieLiveData.value = null
@@ -41,6 +44,5 @@ class OmdbRepositoryImpl @Inject constructor(private val api: OmdbAPI) : OmdbRep
             }
 
         })
-        return movieLiveData
     }
 }
