@@ -51,14 +51,15 @@ class OmdbRepositoryImplTest {
         verify { observer.onChanged(null) }
     }
 
+    /***
+     * GIVEN -> Mock da API configurado para retornar Movie
+     * WHEN -> Quando executar o get do repository
+     * THEN -> Deve retornar Movie no LiveData observado
+     */
     @Test
     fun onGetMovieSuccess_mustReturnMovie() {
-        setupApiGetMovieSuccess()
-        val observer = mockk<Observer<Movie>>(relaxed = true)
-        val liveData = MutableLiveData<Movie>()
-        liveData.observeForever(observer)
-        repository.getMovie(id = "MOVIE_ID", movieLiveData = liveData)
-        verify { observer.onChanged(any()) }
+
+
     }
 
     private fun setupApiGetMovieSuccess() {
@@ -154,3 +155,17 @@ class OmdbRepositoryImplTest {
             "True"
         )
 }
+
+
+/*
+*
+* @Test
+    fun onGetMovieSuccess_mustReturnMovie() {
+        setupApiGetMovieSuccess()
+        val observer = mockk<Observer<Movie>>(relaxed = true)
+        val liveData = MutableLiveData<Movie>()
+        liveData.observeForever(observer)
+        repository.getMovie(id = "MOVIE_ID", movieLiveData = liveData)
+        verify { observer.onChanged(any()) }
+    }
+* */

@@ -10,8 +10,8 @@ object MovieMapper {
         return response?.search?.map { toMovie(it) } ?: emptyList()
     }
 
-    fun toMovie(response: MovieResponse?): Movie {
-        return response?.let {
+    fun toMovie(response: MovieResponse): Movie {
+        return response.let {
             Movie(
                 response.title,
                 response.year,
@@ -26,7 +26,7 @@ object MovieMapper {
                 response.language,
                 response.country,
                 response.awards,
-                response.poster?.replace("300","1200"),
+                response.poster?.replace("300", "1200"),
                 RatingMapper.toRatingList(response.ratings),
                 response.metascore,
                 response.imdbRating,
@@ -39,6 +39,6 @@ object MovieMapper {
                 response.website,
                 response.response
             )
-        } ?: run { Movie() }
+        }
     }
 }

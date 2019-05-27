@@ -4,7 +4,6 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.demo.omdbdemo.R
 import br.com.demo.omdbdemo.common.provider.ResourceProvider
 import br.com.demo.omdbdemo.domain.model.Movie
 import br.com.demo.omdbdemo.domain.repository.OmdbRepository
@@ -27,16 +26,8 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     private fun setupFormatters() {
-        liveDataMediator.addSource(movieLiveData) { result: Movie? ->
-            liveDataMediator.value = result
-            imdbRating.set(resourceProvider.getString(R.string.imdb_rating_label, result?.imdbRating ?: "-"))
-            cast.set(resourceProvider.getString(R.string.cast, result?.actors ?: "-"))
-            directors.set(resourceProvider.getString(R.string.directors, result?.director ?: "-"))
-            plot.set(resourceProvider.getString(R.string.plot, result?.plot ?: "-"))
-        }
+
     }
 
-    fun loadData(id: String) {
-        repository.getMovie(id, movieLiveData)
-    }
+
 }

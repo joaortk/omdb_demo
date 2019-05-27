@@ -28,20 +28,28 @@ class OmdbRepositoryImpl @Inject constructor(private val api: OmdbAPI) : OmdbRep
             override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                 movieLiveData.value = MovieMapper.toMovieList(response.body())
             }
-
         })
     }
 
     override fun getMovie(id: String, movieLiveData: MutableLiveData<Movie>) {
+
+    }
+}
+
+
+/*
+*
+* override fun getMovie(id: String, movieLiveData: MutableLiveData<Movie>) {
         api.getMovie(id).enqueue(object : Callback<MovieResponse> {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 movieLiveData.value = null
             }
 
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                movieLiveData.value = MovieMapper.toMovie(response.body())
+                response.body()?.let {
+                    movieLiveData.value = MovieMapper.toMovie()
+                } ?: run { movieLiveData.value = null }
             }
-
         })
     }
-}
+* */
