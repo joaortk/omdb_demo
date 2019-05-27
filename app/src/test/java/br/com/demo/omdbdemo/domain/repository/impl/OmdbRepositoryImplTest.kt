@@ -31,11 +31,6 @@ class OmdbRepositoryImplTest {
         repository = OmdbRepositoryImpl(api)
     }
 
-    /***
-     * GIVEN -> Mock da API configurado para retornar Movie
-     * WHEN -> Quando executar o get do repository
-     * THEN -> Deve retornar Movie no LiveData observado
-     */
     @Test
     fun onGetMovieSuccess_mustReturnMovie() {
         //GIVEN
