@@ -17,6 +17,7 @@ class MovieDetailViewModel @Inject constructor(
 
     val liveDataMediator = MediatorLiveData<Movie>()
     private val movieLiveData = MutableLiveData<Movie>()
+
     val imdbRating = ObservableField<String>()
     val cast = ObservableField<String>()
     val directors = ObservableField<String>()
@@ -26,15 +27,15 @@ class MovieDetailViewModel @Inject constructor(
         setupFormatters()
     }
 
-    private fun setupFormatters() {
-        imdbRating.set(resourceProvider.getString(R.string.imdb_rating_label))
-        cast.set(resourceProvider.getString(R.string.cast_label))
-        directors.set(resourceProvider.getString(R.string.directors_label))
-        plot.set(resourceProvider.getString(R.string.plot_label))
+    private fun setupFormatters(movie: Movie? = null) {
+        imdbRating.set(resourceProvider.getString(R.string.imdb_rating_label, movie?.imdbRating ?: "-"))
+        cast.set(resourceProvider.getString(R.string.cast_label, movie?.actors ?: "-"))
+        directors.set(resourceProvider.getString(R.string.directors_label, movie?.director ?: "-"))
+        plot.set(resourceProvider.getString(R.string.plot_label, movie?.plot ?: "-"))
     }
 
     fun loadDetail(id: String) {
-
+        repository.getMovie(id, movieLiveData)
     }
 
 

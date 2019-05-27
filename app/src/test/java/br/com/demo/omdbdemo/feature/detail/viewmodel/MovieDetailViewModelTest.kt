@@ -1,5 +1,6 @@
 package br.com.demo.omdbdemo.feature.detail.viewmodel
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.test.core.app.ApplicationProvider
@@ -11,7 +12,9 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
@@ -24,6 +27,9 @@ class MovieDetailViewModelTest {
     private lateinit var repository: OmdbRepository
 
     private val resourceProvider = ResourceProviderImpl(ApplicationProvider.getApplicationContext())
+
+    @get:Rule
+    var rule: TestRule = InstantTaskExecutorRule()
 
     @Before
     fun setup() {
@@ -41,6 +47,7 @@ class MovieDetailViewModelTest {
         //WHEN
         viewModel.loadDetail("SOME_ID")
 
+
         //THEN
         verify { observer.onChanged(any()) }
 
@@ -50,15 +57,18 @@ class MovieDetailViewModelTest {
     fun whenMovieReturned_mustFormatFields() {
         //GIVEN
         setupRepositoryMock()
+        val observer = mockk<Observer<Movie>>(relaxed = true)
+        viewModel.liveDataMediator.observeForever(observer)
+
 
         //WHEN
         viewModel.loadDetail("SOME_ID")
 
         //THEN
-        assertThat(viewModel.imdbRating.get()).isEqualTo("Avaliação iMDB: 9.8")
+        assertThat(viewModel.imdbRating.get()).isEqualTo("Avaliação iMDB: 8.9")
         assertThat(viewModel.cast.get()).isEqualTo("Elenco\nRobert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth")
-        assertThat(viewModel.directors.get()).isEqualTo("Diretores\nAnthony Russo, Joe Russo")
-        assertThat(viewModel.plot.get()).isEqualTo("Resumo:\nAfter the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to undo Thanos' actions and restore order to the universe.")
+        assertThat(viewModel.directors.get()).isEqualTo("Direção\nAnthony Russo, Joe Russo")
+        assertThat(viewModel.plot.get()).isEqualTo("Resumo\nAfter the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to undo Thanos' actions and restore order to the universe.")
     }
 
 
@@ -68,7 +78,6 @@ class MovieDetailViewModelTest {
             .answers {
                 liveData.captured.value = movieMock
             }
-
     }
 
     private val ratings = listOf(
