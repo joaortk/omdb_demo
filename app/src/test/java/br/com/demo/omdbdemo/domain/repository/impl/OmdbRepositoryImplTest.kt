@@ -31,6 +31,25 @@ class OmdbRepositoryImplTest {
         repository = OmdbRepositoryImpl(api)
     }
 
+    /***
+     * GIVEN -> Mock da API configurado para retornar Movie
+     * WHEN -> Quando executar o get do repository
+     * THEN -> Deve retornar Movie no LiveData observado
+     */
+    @Test
+    fun onGetMovieSuccess_mustReturnMovie() {
+        //GIVEN
+        setupApiGetMovieSuccess()
+        val observer = mockk<Observer<Movie>>(relaxed = true)
+        val liveData = MutableLiveData<Movie>()
+        liveData.observeForever(observer)
+
+        //WHEN - call getMovie
+
+        //THEN - observer must change
+
+    }
+
     @Test
     fun onSearchMoviesSuccess_mustReturnMovies() {
         setupApiSearchSuccess()
@@ -49,17 +68,6 @@ class OmdbRepositoryImplTest {
         repository.searchMovies(title = "Avengers: Endgame", type = "MOVIE", year = "2019", movieLiveData = liveData)
         liveData.observeForever(observer)
         verify { observer.onChanged(null) }
-    }
-
-    /***
-     * GIVEN -> Mock da API configurado para retornar Movie
-     * WHEN -> Quando executar o get do repository
-     * THEN -> Deve retornar Movie no LiveData observado
-     */
-    @Test
-    fun onGetMovieSuccess_mustReturnMovie() {
-
-
     }
 
     private fun setupApiGetMovieSuccess() {

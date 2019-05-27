@@ -2,7 +2,7 @@
     <string name="app_name">OMDB Demo</string>
     <string name="title_activity_movie_detail">MovieDetailActivity</string>
     <string name="imdb_rating_label">Avaliação iMDB: %s</string>
-    <string name="cast">Elenco\n%s</string>
-    <string name="directors">Direção\n%s</string>
-    <string name="plot">Resumo\n%s</string>
+    <string name="cast_label">Elenco\n%s</string>
+    <string name="directors_label">Direção\n%s</string>
+    <string name="plot_label">Resumo\n%s</string>
 </resources>

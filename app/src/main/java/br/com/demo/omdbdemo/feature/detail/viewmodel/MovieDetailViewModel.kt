@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import br.com.demo.omdbdemo.R
 import br.com.demo.omdbdemo.common.provider.ResourceProvider
 import br.com.demo.omdbdemo.domain.model.Movie
 import br.com.demo.omdbdemo.domain.repository.OmdbRepository
@@ -26,6 +27,13 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     private fun setupFormatters() {
+        imdbRating.set(resourceProvider.getString(R.string.imdb_rating_label))
+        cast.set(resourceProvider.getString(R.string.cast_label))
+        directors.set(resourceProvider.getString(R.string.directors_label))
+        plot.set(resourceProvider.getString(R.string.plot_label))
+    }
+
+    fun loadDetail(id: String) {
 
     }
 
