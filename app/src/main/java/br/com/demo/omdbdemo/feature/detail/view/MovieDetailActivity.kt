@@ -29,6 +29,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
+        binding.viewModel = ViewModelProviders.of(this, viewModelFactory)[MovieDetailViewModel::class.java]
         movieArg.imdbId?.let { id ->
             binding.viewModel?.loadData(id)
         }
@@ -36,7 +37,6 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun setupBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail)
-        binding.viewModel = ViewModelProviders.of(this, viewModelFactory)[MovieDetailViewModel::class.java]
         binding.lifecycleOwner = this
     }
 

@@ -53,12 +53,15 @@ class OmdbRepositoryImplTest {
 
     @Test
     fun onGetMovieSuccess_mustReturnMovie() {
+        //GIVEN
         setupApiGetMovieSuccess()
         val observer = mockk<Observer<Movie>>(relaxed = true)
         val liveData = MutableLiveData<Movie>()
         liveData.observeForever(observer)
-        repository.getMovie(id = "MOVIE_ID", movieLiveData = liveData)
-        verify { observer.onChanged(any()) }
+
+        //WHEN - call getMovie
+
+        //THEN - observer must change
     }
 
     private fun setupApiGetMovieSuccess() {
