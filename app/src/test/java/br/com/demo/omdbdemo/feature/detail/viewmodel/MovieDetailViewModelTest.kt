@@ -60,7 +60,6 @@ class MovieDetailViewModelTest {
         val observer = mockk<Observer<Movie>>(relaxed = true)
         viewModel.liveDataMediator.observeForever(observer)
 
-
         //WHEN
         viewModel.loadDetail("SOME_ID")
 

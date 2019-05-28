@@ -40,9 +40,10 @@ class OmdbRepositoryImplTest {
         liveData.observeForever(observer)
 
         //WHEN - call getMovie
+        repository.getMovie("SOME_ID", liveData)
 
         //THEN - observer must change
-
+        verify { observer.onChanged(any()) }
     }
 
     @Test

@@ -40,5 +40,4 @@ class MovieDetailActivityTest {
             matchText(R.id.detail_rating, "Avaliação iMDB: 8.9")
         }
     }
-
 }

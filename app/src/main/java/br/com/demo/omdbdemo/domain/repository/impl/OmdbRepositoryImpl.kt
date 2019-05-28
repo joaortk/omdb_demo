@@ -34,11 +34,13 @@ class OmdbRepositoryImpl @Inject constructor(private val api: OmdbAPI) : OmdbRep
     override fun getMovie(id: String, movieLiveData: MutableLiveData<Movie>) {
         api.getMovie(id).enqueue(object : Callback<MovieResponse> {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                //ERRO
+                movieLiveData.value = null
             }
 
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                //SUCESSO
+                response.body()?.let {
+                    movieLiveData.value = MovieMapper.toMovie(it)
+                } ?: run { movieLiveData.value = null }
             }
         })
     }

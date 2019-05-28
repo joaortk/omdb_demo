@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="16dp"
+                    android:src="@{viewModel.liveDataMediator.poster}"
                     tools:src="@mipmap/ic_launcher"/>
 
             <TextView
@@ -52,6 +53,7 @@
                     android:layout_gravity="center"
                     android:textSize="18sp"
                     android:layout_margin="16dp"
+                    android:text="@{viewModel.imdbRating}"
                     tools:text="8.9"/>
 
             <TextView

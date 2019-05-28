@@ -24,10 +24,14 @@ class MovieDetailViewModel @Inject constructor(
     val plot = ObservableField<String>()
 
     init {
-        setupFormatters()
+        setupFields()
+        liveDataMediator.addSource(movieLiveData) { movie ->
+            liveDataMediator.value = movie
+            setupFields(movie)
+        }
     }
 
-    private fun setupFormatters(movie: Movie? = null) {
+    private fun setupFields(movie: Movie? = null) {
         imdbRating.set(resourceProvider.getString(R.string.imdb_rating_label, movie?.imdbRating ?: "-"))
         cast.set(resourceProvider.getString(R.string.cast_label, movie?.actors ?: "-"))
         directors.set(resourceProvider.getString(R.string.directors_label, movie?.director ?: "-"))
@@ -37,6 +41,4 @@ class MovieDetailViewModel @Inject constructor(
     fun loadDetail(id: String) {
         repository.getMovie(id, movieLiveData)
     }
-
-
 }
