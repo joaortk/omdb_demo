@@ -24,10 +24,10 @@ class MovieDetailViewModel @Inject constructor(
     val plot = ObservableField<String>()
 
     init {
-        setupFormatters()
+        setupFields()
     }
 
-    private fun setupFormatters(movie: Movie? = null) {
+    private fun setupFields(movie: Movie? = null) {
         imdbRating.set(resourceProvider.getString(R.string.imdb_rating_label, movie?.imdbRating ?: "-"))
         cast.set(resourceProvider.getString(R.string.cast_label, movie?.actors ?: "-"))
         directors.set(resourceProvider.getString(R.string.directors_label, movie?.director ?: "-"))
