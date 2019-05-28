@@ -15,29 +15,12 @@ object MovieMapper {
             Movie(
                 response.title,
                 response.year,
-                response.rated,
-                response.released,
-                response.runtime,
-                response.genre,
                 response.director,
-                response.writer,
                 response.actors,
                 response.plot,
-                response.language,
-                response.country,
-                response.awards,
-                response.poster?.replace("300", "1200"),
-                RatingMapper.toRatingList(response.ratings),
-                response.metascore,
+                response.poster,
                 response.imdbRating,
-                response.imdbVotes,
-                response.imdbId,
-                response.type,
-                response.dvd,
-                response.boxOffice,
-                response.production,
-                response.website,
-                response.response
+                response.imdbId
             )
         }
     }
