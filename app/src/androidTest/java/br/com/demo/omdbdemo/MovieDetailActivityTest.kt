@@ -37,7 +37,7 @@ class MovieDetailActivityTest {
             isDisplayedOnScroll(R.id.detail_directors)
             isDisplayedOnScroll(R.id.detail_plot)
             isDisplayed(R.id.detail_rating)
-            matchText(R.id.detail_rating, "Avaliação iMDB: 8.9")
+            matchText(R.id.detail_rating, "Avaliação iMDB: 8.4")
         }
     }
 

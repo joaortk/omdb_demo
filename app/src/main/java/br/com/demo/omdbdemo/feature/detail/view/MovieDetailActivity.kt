@@ -16,7 +16,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMovieDetailBinding
 
-    private val movieArg: Movie by lazy { intent.getParcelableExtra<Movie>(MOVIE_ARG) }
+    private val movieArg: Movie? by lazy { intent.getParcelableExtra(MOVIE_ARG) }
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -29,7 +29,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        movieArg.imdbId?.let { id ->
+        movieArg?.imdbId?.let { id ->
             binding.viewModel?.loadData(id)
         }
     }

@@ -20,7 +20,8 @@
             android:label="@string/title_activity_movie_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".feature.home.view.HomeActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
